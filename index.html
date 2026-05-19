@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz Interaktif</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+        height: 100vh;
+        background: linear-gradient(135deg, #1e3c72, #2a5298);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+    }
+
+    .container {
+        width: 420px;
+        padding: 30px;
+        border-radius: 20px;
+        background: rgba(255,255,255,0.1);
+        backdrop-filter: blur(15px);
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .category {
+        font-size: 14px;
+        color: #a0e7ff;
+        margin-bottom: 10px;
+    }
+
+    h2 {
+        margin-bottom: 20px;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        border-radius: 10px;
+        border: none;
+        margin-bottom: 15px;
+    }
+
+    button {
+        padding: 12px 20px;
+        border-radius: 10px;
+        border: none;
+        background: #00c6ff;
+        color: white;
+        cursor: pointer;
+        transition: 0.3s;
+        margin-top: 5px;
+    }
+
+    button:hover {
+        background: #0072ff;
+    }
+
+    .error {
+        margin-top: 10px;
+        color: #ff6b6b;
+        display: none;
+    }
+
+    .info {
+        margin-top: 15px;
+        color: #a8ffb0;
+        display: none;
+        font-size: 14px;
+    }
+
+    .next-btn {
+        display: none;
+        background: #28c76f;
+    }
+
+    .next-btn:hover {
+        background: #1ea85a;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="category" id="category"></div>
+    <h2 id="question"></h2>
+
+    <input type="text" id="answer" placeholder="masukkan sesuatu...">
+    <button onclick="checkAnswer()">tekan ini</button>
+
+    <div class="error" id="error">yaaaa salah🤪</div>
+    <div class="info" id="info"></div>
+
+    <button class="next-btn" id="nextBtn" onclick="nextSlide()"> terus </button>
+</div>
+
+<script>
+const questions = [
+    {
+        category: "Teka-Teki",
+        question: "aku bangun tanpa tidur, bekerja tanpa lelah, dan hilang tanpa pamit. Namun aku akan kembali siapa aku?",
+        answer: "matahari",
+    },
+    {
+        category: "Teka-Teki",
+        question: "Aku tidak punya lidah, namun aku bisa bercerita. Aku tak hidup, Namun bisa membuatmu tertawa atau menangis. Aku bisa dibuka, Namun tik punya pintu. Siapakah aku? ",
+        answer: "buku",
+    },
+    {
+        category: "Tebak-tebakan",
+        question: "aku belum pernah datang, tapi semua orang menantiku. Aku tak bisa disentuh, tapi bisa direncanakan. Apakah aku?",
+        answer: "masa depan",
+    },
+    {
+        category: "Selesai",
+        question: "selamat kamu sudah menyelesaikan permainan ini🎉, good bye🤗",
+        answer: null,
+    }
+];
+
+let current = 0;
+
+function loadQuestion() {
+    document.getElementById("category").innerText = questions[current].category;
+    document.getElementById("question").innerText = questions[current].question;
+
+    document.getElementById("answer").value = "";
+    document.getElementById("error").style.display = "none";
+    document.getElementById("info").style.display = "none";
+    document.getElementById("nextBtn").style.display = "none";
+
+    if (questions[current].answer === null) {
+        document.getElementById("answer").style.display = "none";
+        document.querySelector("button").style.display = "none";
+    }
+}
+
+function checkAnswer() {
+    const input = document.getElementById("answer").value.toLowerCase();
+    const error = document.getElementById("error");
+    const info = document.getElementById("info");
+    const nextBtn = document.getElementById("nextBtn");
+
+    if (input === questions[current].answer) {
+        error.style.display = "none";
+
+        info.innerText = questions[current].info;
+        info.style.display = "block";
+
+        nextBtn.style.display = "inline-block";
+    } else {
+        error.style.display = "block";
+        info.style.display = "none";
+    }
+}
+
+function nextSlide() {
+    current++;
+    loadQuestion();
+}
+
+// load awal
+loadQuestion();
+</script>
+
+</body>
+</html>
